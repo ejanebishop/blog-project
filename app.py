@@ -1,11 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
+
+
 @app.route("/home")
 def home_page():
-    return "Blog Homepage"
+    return render_template('home.html')
 
 @app.route("/login")
 def login_page():
