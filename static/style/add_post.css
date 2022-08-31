@@ -10,27 +10,27 @@
 }
 
 .button {
-    width: 30px;
-    height: 40px;
-    margin-top: 3px;
-    margin-left: 600px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .button1 {
     width: 100px;
-    height: 20px;
     background-color: rgb(131, 160, 161);
     color: rgb(32, 57, 69);
-    border-radius: 2px;
+    border-radius: 7px;
     border: none;
+    padding: 15px;
 }
 
 .button1:hover {
     width: 100px;
-    height: 20px;
     background-color: #4c96af;
     color: white;
-    border-radius: 2px;
+    border-radius: 7px;
     border: none;
     text-decoration: underline;
     cursor: pointer;
