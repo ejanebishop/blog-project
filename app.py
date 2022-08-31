@@ -18,6 +18,9 @@ def register_page():
     return render_template('register.html')
 
 
+@app.route("/addpost")
+def add_post():
+    return render_template('addpost.html')
 
 
     
