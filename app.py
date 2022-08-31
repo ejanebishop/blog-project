@@ -22,6 +22,10 @@ def register_page():
 def add_post():
     return render_template('addpost.html')
 
+@app.route("/mypage")
+def my_page():
+    return render_template('mypage.html')
+
 
     
 if __name__ == "__main__":
