@@ -1,8 +1,20 @@
-from flask import Flask, render_template
+from crypt import methods
+from distutils.log import error
+from email import message
+from flask import Flask, render_template, request
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQl_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'Ekin.4518'
+app.config['MYSQL_DB'] = 'blog'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
+
+
+mysql_db_connection = MySQL(app)
 
 
 @app.route("/home")
@@ -13,11 +25,32 @@ def home_page():
 def login_page():
     return render_template('loginpage.html')
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register_page():
-    return render_template('register.html')
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
 
-
+        if password != confirm_password:
+            return render_template("register.html", message="Şifreler Uyuşmuyor")
+        else:
+            cursor = mysql_db_connection.connection.cursor()
+            #  check user exist
+            select_query = f"SELECT * FROM users WHERE email='{email}'"
+            cursor.execute(select_query)
+            is_user_exist = cursor.fetchall()
+            if is_user_exist:
+                return render_template("register.html", message="Böyle bir user var zaten!")
+            else:
+                insert_query = f"INSERT INTO users (email, password) VALUES ('{email}', '{password}');"
+                cursor.execute(insert_query)
+                mysql_db_connection.connection.commit()
+            cursor.close()
+            return render_template("register.html", message="Başarıyla kayıt olundu")
+    else:
+        return render_template('register.html')
+    
 @app.route("/addpost")
 def add_post():
     return render_template('addpost.html')
@@ -27,6 +60,19 @@ def my_page():
     return render_template('mypage.html')
 
 
+@app.route("/post_detail/<post_id>")
+def post_detail(post_id):
+    cursor = mysql_db_connection.connection.cursor()
+    query_string = "SELECT * FROM posts;"
+    cursor.execute(query_string)
     
+    posts_data = cursor.fetchall()
+    cursor.close()
+    print(posts_data)
+
+    return render_template('post_detail.html', post_data = posts_data[0])
+
+
+
 if __name__ == "__main__":
     app.run(debug= True)
