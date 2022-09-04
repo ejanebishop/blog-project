@@ -21,9 +21,36 @@ mysql_db_connection = MySQL(app)
 def home_page():
     return render_template('home.html')
 
-@app.route("/login")
+@app.route("/login", methods= ["POST", "GET"])
 def login_page():
+    # metodu kontrol ediyor
+    if request.method == "POST":
+        email = request.form.get('email')
+        password = request.form.get('password')
+       
+        cursor = mysql_db_connection.connection.cursor()
+     #  check user exist
+        select_query = f"SELECT * FROM users WHERE email='{email}'"
+        cursor.execute(select_query)
+        user = cursor.fetchone()
+        #user var mı diye kontrol ediyorum
+        if user:
+            print(password, user)
+            # password doğru mu diye kontrol ediyorum.
+            if password == user["password"]:
+               return render_template("home.html")
+
+            else: 
+               return render_template("loginpage.html", message= "Parolanız yanlıştır. Tekrar deneyiniz.")
+                
+            
+
+        else:
+            return render_template("loginpage.html", message= "Böyle bir kullanıcı bulunamadı.")
+        
+
     return render_template('loginpage.html')
+    
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
@@ -50,7 +77,10 @@ def register_page():
             return render_template("register.html", message="Başarıyla kayıt olundu")
     else:
         return render_template('register.html')
-    
+
+
+
+        
 @app.route("/addpost")
 def add_post():
     return render_template('addpost.html')
