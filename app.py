@@ -1,8 +1,6 @@
-from crypt import methods
-from distutils.log import error
-from email import message
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
 from flask_mysqldb import MySQL
+from functools import wraps 
 
 app = Flask(__name__)
 
@@ -11,34 +9,46 @@ app.config['MYSQl_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'Ekin.4518'
 app.config['MYSQL_DB'] = 'blog'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-
+app.secret_key = 'ajshkjdlfşanfalksşdkalnsf2352'
 
 
 mysql_db_connection = MySQL(app)
 
+def required_session(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'is_loggedin' in session: 
+            return f(*args,**kwargs)
+        else:
+            return redirect ('/login')
+    return wrap
+
 
 @app.route("/home")
 def home_page():
+    print(session)
     return render_template('home.html')
 
 @app.route("/login", methods= ["POST", "GET"])
 def login_page():
-    # metodu kontrol ediyor
+    #metodu kontrol ediyor
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
        
         cursor = mysql_db_connection.connection.cursor()
-     #  check user exist
+     #check user exist
         select_query = f"SELECT * FROM users WHERE email='{email}'"
         cursor.execute(select_query)
         user = cursor.fetchone()
         #user var mı diye kontrol ediyorum
         if user:
-            print(password, user)
-            # password doğru mu diye kontrol ediyorum.
+            
+            #password doğru mu diye kontrol ediyorum.
             if password == user["password"]:
-               return render_template("home.html")
+                session["is_loggedin"] = True
+                session["email"] = email
+                return redirect("/home")
 
             else: 
                return render_template("loginpage.html", message= "Parolanız yanlıştır. Tekrar deneyiniz.")
@@ -82,12 +92,20 @@ def register_page():
 
         
 @app.route("/addpost")
+@required_session
 def add_post():
     return render_template('addpost.html')
 
 @app.route("/mypage")
+@required_session
 def my_page():
-    return render_template('mypage.html')
+        return render_template('mypage.html')
+   
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
 
 
 @app.route("/post_detail/<post_id>")
