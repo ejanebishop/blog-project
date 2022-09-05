@@ -131,14 +131,23 @@ def logout():
 @app.route("/post_detail/<post_id>")
 def post_detail(post_id):
     cursor = mysql_db_connection.connection.cursor()
-    query_string = "SELECT * FROM posts;"
+    query_string = f"SELECT * FROM posts WHERE id = {post_id};"
     cursor.execute(query_string)
     
     posts_data = cursor.fetchall()
     cursor.close()
-    print(posts_data)
-
+    
     return render_template('post_detail.html', post_data = posts_data[0])
+
+@app.route("/delete/<post_id>")
+def delete(post_id):
+    cursor = mysql_db_connection.connection.cursor()
+    query_string = f"DELETE FROM posts WHERE id = {post_id};"
+    cursor.execute(query_string)
+    mysql_db_connection.connection.commit()
+    cursor.close()
+    return redirect('/mypage')
+
 
 
 

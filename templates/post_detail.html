@@ -1,7 +1,9 @@
+{% extends "base.html" %}{% block content %}
 <div class="card">
     <h2>{{ post_data.title }} </h2>
     <h5>{{ post_data.author }} - {{ post_data.created_date }} </h5>
 
     <p> {{ post_data.content }} </p>
 
-</div>
+
+</div>{% endblock %}

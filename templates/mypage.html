@@ -9,6 +9,7 @@
 
             <p> {{ post.content }}</p>
             <div class="buttons"> <button class="read-more">read more...</button></div>
+            <a href="/delete/{{post.id}}" class="delete">delete</a>
         </div>
         {% endfor %}
     </div>
