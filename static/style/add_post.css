@@ -2,11 +2,29 @@ body {
     margin: 0;
 }
 
+.container {
+    /* width: 700px; */
+    /* height: 400px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .editorbox {
-    margin-top: 20px;
+    margin-top: 80px;
     margin-left: 20px;
     width: 700px;
-    height: 400px;
+    /* height: 400px; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.text-area {}
+
+.input {
+    padding: 10px;
 }
 
 .button {

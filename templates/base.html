@@ -9,12 +9,14 @@
 <body>
 
     <div class="topnav">
-        <a class="active" href="/home">Home</a>
+        <a class="active" href="/home">Home</a> {% if session['is_loggedin'] %}
+
         <a href="/mypage">Mypage</a>
         <a href="/addpost">Add post</a>
+        <a href="/logout">Logout</a>{% else %}
         <a href="/login">Login</a>
-        <a href="/register">Register</a>
-        <a href="/logout">Logout</a>
+        <a href="/register">Register</a>{% endif %}
+
 
     </div>
     <div id="content">{% block content %}{% endblock %}</div>

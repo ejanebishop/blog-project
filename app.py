@@ -1,7 +1,8 @@
+from crypt import methods
 from flask import Flask, render_template, request, session, redirect
 from flask_mysqldb import MySQL
 from functools import wraps 
-
+from datetime import datetime
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -91,9 +92,19 @@ def register_page():
 
 
         
-@app.route("/addpost")
+@app.route("/addpost",methods=["GET", "POST"])
 @required_session
 def add_post():
+    if request.method == "POST":
+        title = request.form.get("title")
+        content = request.form.get("ekin")
+        author = session["email"]
+        date = datetime.today().strftime('%Y-%m-%d')
+        cursor = mysql_db_connection.connection.cursor()
+        insert_query = f"INSERT INTO posts (title, created_date, author, content) VALUES ('{title}', '{date}',  '{author}',  '{content}');"
+        cursor.execute(insert_query)
+        mysql_db_connection.connection.commit()
+        cursor.close()
     return render_template('addpost.html')
 
 @app.route("/mypage")
