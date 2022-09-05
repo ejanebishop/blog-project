@@ -27,8 +27,12 @@ def required_session(f):
 
 @app.route("/home")
 def home_page():
-    print(session)
-    return render_template('home.html')
+    cursor = mysql_db_connection.connection.cursor()
+    select_query = f"SELECT * FROM posts ORDER BY id DESC"
+    cursor.execute(select_query)
+    posts = cursor.fetchall()
+    
+    return render_template('home.html', db_posts = posts)
 
 @app.route("/login", methods= ["POST", "GET"])
 def login_page():
@@ -110,7 +114,12 @@ def add_post():
 @app.route("/mypage")
 @required_session
 def my_page():
-        return render_template('mypage.html')
+        cursor = mysql_db_connection.connection.cursor()
+        author = session["email"]
+        select_query = f"SELECT * FROM posts WHERE author = '{author}' ORDER BY id DESC"
+        cursor.execute(select_query)
+        posts = cursor.fetchall()
+        return render_template('mypage.html', db_posts = posts)
    
 
 @app.route("/logout")
