@@ -8,8 +8,9 @@
             <h5>{{ post.author }} - {{ post.created_date }} </h5>
 
             <p> {{ post.content | truncate(250) }}</p>
-            <div class="buttons"> <button class="read-more">read more...</button></div>
-            <a href="/delete/{{post.id}}" class="delete">delete</a>
+            <div class="button_container">
+                <div class="buttons"> <button class="read-more">read more...</button></div>
+                <a href="/delete/{{post.id}}" class="delete">delete</a></div>
         </div>
         {% endfor %}
     </div>

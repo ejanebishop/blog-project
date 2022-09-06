@@ -35,8 +35,8 @@ body {
 
 .button1 {
     width: 100px;
-    background-color: rgb(131, 160, 161);
-    color: rgb(32, 57, 69);
+    background-color: #333;
+    color: #eee;
     border-radius: 7px;
     border: none;
     padding: 15px;
@@ -44,8 +44,8 @@ body {
 
 .button1:hover {
     width: 100px;
-    background-color: #4c96af;
-    color: white;
+    background-color: #eee;
+    color: #333;
     border-radius: 7px;
     border: none;
     text-decoration: underline;

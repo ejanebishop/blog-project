@@ -1,6 +1,6 @@
     body {
         font-family: Arial;
-        background: #f1f1f1;
+        background: #eeeeee;
         margin: 0;
     }
     /* Header/Blog Title */
@@ -9,7 +9,7 @@
         padding: 30px;
         font-size: 40px;
         text-align: center;
-        background: white;
+        background: rgb(146, 145, 145);
     }
     /* Create two unequal columns that floats next to each other */
     /* Left column */
@@ -29,9 +29,11 @@
     /* Add a card effect for articles */
     
     .card {
+        width: 100%;
         background-color: white;
         padding: 20px;
         margin-top: 20px;
+        border-radius: 30px;
     }
     /* Clear floats after the columns */
     
@@ -60,36 +62,39 @@
     
     .read-more {
         padding: 10px;
-        background-color: rgb(254, 255, 255);
-        border-radius: 7px;
+        background-color: #333;
+        color: #eeeeee;
+        border-radius: 10px;
         border: none;
         font-size: 15px;
         text-decoration: none;
     }
     
+    .read-more:hover {
+        background-color: #eeeeee;
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .button_container {
+        display: flex;
+        justify-content: space-between;
+    }
+    
     .delete {
+        text-decoration: none;
+        float: right;
         padding: 10px;
-        margin-top: 10px;
-        background-color: crimson;
-        color: rgb(224, 223, 223);
+        background-color: #333;
+        color: #eeeeee;
         border-radius: 10px;
         border: none;
     }
     
     .delete:hover {
-        padding: 10px;
-        margin-top: 10px;
-        background-color: rgb(108, 80, 85);
-        color: rgb(255, 255, 255);
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-    }
-    
-    .read-more:hover {
-        background-color: aliceblue;
-        text-decoration: underline;
-        cursor: pointer;
+        background-color: #eeeeee;
+        color: #333;
     }
     
     .buttons {
