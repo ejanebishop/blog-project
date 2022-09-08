@@ -1,9 +1,11 @@
-{% extends "base.html" %}{% block content %}
-<div class="card">
-    <h2>{{ post_data.title }} </h2>
-    <h5>{{ post_data.author }} - {{ post_data.created_date }} </h5>
+{% extends "base.html" %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style/post_detail.css') }}"> {% endblock %} {% block content %}
 
-    <p> {{ post_data.content }} </p>
+<div class="card">
+    <h2 class="header">{{ post_data.title }} </h2>
+    <h5 class="header2">{{ post_data.author }} - {{ post_data.created_date }} </h5>
+
+    <p class="paragraph"> {{ post_data.content }} </p>
 
 
 </div>{% endblock %}
